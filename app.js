@@ -6,6 +6,7 @@ const PORT = 3000;
 
 const cors = require("cors");
 app.use(cors());
+app.use(express.json()); // Додаємо middleware для розшифрування JSON-даних
 
 // API for Google Authentication
 app.post("/google-auth", async (req, res) => {
