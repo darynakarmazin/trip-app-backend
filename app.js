@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+const cors = require("cors");
+
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client();
 
@@ -24,6 +26,8 @@ app.post("/google-auth", async (req, res) => {
     res.status(400).json({ err });
   }
 });
+
+app.use(cors());
 
 app.listen(3000, () => {
   console.log("Example app listening on port 3000!");
