@@ -1,12 +1,31 @@
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
+
+const { DB_HOST } = process.env;
+
+mongoose
+  .connect(DB_HOST)
+  .then(() => console.log("Database connection successful"))
+  .catch((error) => {
+    console.log(error.message);
+    process.exit(1);
+  });
+
 const express = require("express");
+const logger = require("morgan");
+const cors = require("cors");
+
+const app = express();
+
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
+
+app.use(logger(formatsLogger));
+app.use(cors());
+app.use(express.json());
+
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client();
-const app = express();
-const PORT = 3000;
-
-const cors = require("cors");
-app.use(cors());
-app.use(express.json()); // Додаємо middleware для розшифрування JSON-даних
 
 // API for Google Authentication
 app.post("/google-auth", async (req, res) => {
@@ -25,4 +44,4 @@ app.post("/google-auth", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Server running on PORT : ${PORT}`));
+module.exports = app;
