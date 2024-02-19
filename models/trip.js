@@ -2,11 +2,10 @@ const { Schema, model } = require("mongoose");
 
 const tripSchema = Schema(
   {
-    // index: String,
-    city: String,
-    imageUrl: String,
-    startData: Date,
-    endData: Date,
+    city: { type: String, required: true },
+    imageUrl: { type: String, required: true },
+    startData: { type: Date, required: true },
+    endData: { type: Date, required: true },
   },
   { versionKey: false, timestamps: true }
 );
