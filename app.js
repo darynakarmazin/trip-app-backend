@@ -9,6 +9,7 @@ app.use(cors());
 
 // API for Google Authentication
 app.post("/google-auth", async (req, res) => {
+  console.log(req);
   const { credential, client_id } = req.body;
   try {
     const ticket = await client.verifyIdToken({
