@@ -1,14 +1,11 @@
 const express = require("express");
-const app = express();
-
-const cors = require("cors");
-
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client();
+const app = express();
+const PORT = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+const cors = require("cors");
+app.use(cors());
 
 // API for Google Authentication
 app.post("/google-auth", async (req, res) => {
@@ -19,7 +16,6 @@ app.post("/google-auth", async (req, res) => {
       audience: client_id,
     });
     const payload = ticket.getPayload();
-    console.log(ticket);
     const userid = payload["sub"];
     res.status(200).json({ payload });
   } catch (err) {
@@ -27,8 +23,4 @@ app.post("/google-auth", async (req, res) => {
   }
 });
 
-app.use(cors());
-
-app.listen(3000, () => {
-  console.log("Example app listening on port 3000!");
-});
+app.listen(PORT, () => console.log(`Server running on PORT : ${PORT}`));
