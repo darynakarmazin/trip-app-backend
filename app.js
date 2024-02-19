@@ -16,6 +16,8 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
+const tripsRouter = require("./routes/api/trips");
+
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -23,6 +25,8 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/trips", tripsRouter);
 
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client();
