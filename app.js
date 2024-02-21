@@ -31,7 +31,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/trips", tripsRouter);
 
 // API for Google Authentication
-const { User } = require("./models");
+// const { User } = require("./models");
 
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -49,16 +49,16 @@ app.post("/google-auth", async (req, res) => {
     const payload = ticket.getPayload();
     const userid = payload["sub"];
 
-    // Check if the user exists in your database
-    let user = await User.findOne({ email });
-    if (!user) {
-      // Create a user if they do not exist
-      user = await User.create({
-        email,
-        name: `${given_name} ${family_name}`,
-        authSource: "google",
-      });
-    }
+    // // Check if the user exists in your database
+    // let user = await User.findOne({ email });
+    // if (!user) {
+    //   // Create a user if they do not exist
+    //   user = await User.create({
+    //     email,
+    //     name: `${given_name} ${family_name}`,
+    //     authSource: "google",
+    //   });
+    // }
 
     res.status(200).json({ payload });
   } catch (err) {
