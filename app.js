@@ -53,6 +53,7 @@ app.post("/google-auth", async (req, res) => {
 
     // Check if the user exists in your database
     let user = await User.findOne({ email });
+    console.log(user);
     if (!user) {
       // Create a user if they do not exist
       user = await User.create({
