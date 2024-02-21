@@ -15,7 +15,7 @@ const auth = async (req, res, next) => {
       });
       return;
     }
-    const { id } = jwt.verify(token, SECRET_KEY);
+    const { id } = jwt.verify(token, JWT_SECRET);
     const user = await User.findById(id);
     if (!user || !user.token) {
       res.status(401).json({
