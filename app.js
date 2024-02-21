@@ -49,7 +49,7 @@ app.post("/google-auth", async (req, res) => {
     const payload = ticket.getPayload();
     const userid = payload["sub"];
     const { email, given_name, family_name } = payload;
-    console.log(email, given_name, family_name);
+    // console.log(email, given_name, family_name);
 
     // Check if the user exists in your database
     let user = await User.findOne({ email });
@@ -60,13 +60,26 @@ app.post("/google-auth", async (req, res) => {
         name: `${given_name} ${family_name}`,
         authSource: "google",
       });
-      console.log(user);
+      // console.log(user);
     }
+
     const token = jwt.sign({ user }, JWT_SECRET);
-    res
-      .status(200)
-      .cookie("token", token, { http: true })
-      .json({ payload, data: { token } });
+    await User.findByIdAndUpdate(user._id, { token });
+    res.status(200).json({
+      status: "OK",
+      code: 200,
+      data: {
+        token,
+        user: {
+          email,
+        },
+      },
+    });
+
+    // res
+    //   .status(200)
+    //   .cookie("token", token, { http: true })
+    //   .json({ payload, data: { token } });
 
     // res.status(200).json({ payload, data: { token } });
   } catch (err) {
