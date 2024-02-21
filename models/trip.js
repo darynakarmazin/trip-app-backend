@@ -11,7 +11,7 @@ const tripSchema = Schema(
       ref: "user",
     },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false }
 );
 
 const Trip = model("trip", tripSchema);
