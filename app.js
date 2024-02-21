@@ -49,7 +49,6 @@ app.post("/google-auth", async (req, res) => {
     const payload = ticket.getPayload();
     const userid = payload["sub"];
     const { email, given_name, family_name } = payload;
-    // console.log(email, given_name, family_name);
 
     // Check if the user exists in your database
     let user = await User.findOne({ email });
@@ -60,7 +59,6 @@ app.post("/google-auth", async (req, res) => {
         name: `${given_name} ${family_name}`,
         authSource: "google",
       });
-      // console.log(user);
     }
     console.log(user);
     const token = jwt.sign({ user }, JWT_SECRET);
