@@ -48,19 +48,21 @@ app.post("/google-auth", async (req, res) => {
     });
     const payload = ticket.getPayload();
     const userid = payload["sub"];
+    const { email, given_name, family_name } = payload;
+    console.log(email, given_name, family_name);
 
-    // // Check if the user exists in your database
-    // let user = await User.findOne({ email });
-    // if (!user) {
-    //   // Create a user if they do not exist
-    //   user = await User.create({
-    //     email,
-    //     name: `${given_name} ${family_name}`,
-    //     authSource: "google",
-    //   });
-    // }
-    // const token = jwt.sign({ user }, JWT_SECRET);
-    // res.status(200).cookie("token", token, { http: true }).json({ payload });
+    // Check if the user exists in your database
+    let user = await User.findOne({ email });
+    if (!user) {
+      // Create a user if they do not exist
+      user = await User.create({
+        email,
+        name: `${given_name} ${family_name}`,
+        authSource: "google",
+      });
+    }
+    const token = jwt.sign({ user }, JWT_SECRET);
+    res.status(200).cookie("token", token, { http: true }).json({ payload });
 
     res.status(200).json({ payload });
   } catch (err) {
