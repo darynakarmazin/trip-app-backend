@@ -2,7 +2,8 @@ const { Trip } = require("../../models");
 
 const getAll = async (req, res, next) => {
   try {
-    const trips = await Trip.find({});
+    const { _id } = req.user;
+    const trips = await Trip.find({ owner: _id });
     res.json(
       res.json({
         status: "success",

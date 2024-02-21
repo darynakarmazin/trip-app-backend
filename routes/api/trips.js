@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
+const { auth } = require("../../middlewares");
+
 const { trips: ctrl } = require("../../controllers");
 
-router.get("/", ctrl.getAll);
+router.get("/", auth, ctrl.getAll);
 
-router.post("/", ctrl.add);
+router.post("/", auth, ctrl.add);
 
 module.exports = router;
