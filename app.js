@@ -52,7 +52,7 @@ app.post("/google-auth", async (req, res) => {
     console.log(email, given_name, family_name);
 
     // Check if the user exists in your database
-    let user = await User.findOne(email);
+    let user = await User.findOne({ email });
     if (!user) {
       // Create a user if they do not exist
       user = await User.create({
@@ -61,8 +61,8 @@ app.post("/google-auth", async (req, res) => {
         authSource: "google",
       });
     }
-    const token = jwt.sign({ user }, JWT_SECRET);
-    res.status(200).cookie("token", token, { http: true }).json({ payload });
+    // const token = jwt.sign({ user }, JWT_SECRET);
+    // res.status(200).cookie("token", token, { http: true }).json({ payload });
 
     res.status(200).json({ payload });
   } catch (err) {
