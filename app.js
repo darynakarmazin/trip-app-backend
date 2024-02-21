@@ -31,7 +31,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/trips", tripsRouter);
 
 // API for Google Authentication
-const { User } = require("../../models");
+const { User } = require("./models");
 
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
