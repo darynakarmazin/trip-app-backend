@@ -1,5 +1,5 @@
 const { Trip } = require("../../models");
-const { tripSchema } = require("../../shemas");
+const { tripSchema } = require("../../schemas");
 
 const add = async (req, res, next) => {
   try {
