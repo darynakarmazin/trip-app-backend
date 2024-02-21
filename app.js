@@ -62,10 +62,10 @@ app.post("/google-auth", async (req, res) => {
         authSource: "google",
       });
     }
-    // const token = jwt.sign({ user }, JWT_SECRET);
+    const token = jwt.sign({ user }, JWT_SECRET);
     // res.status(200).cookie("token", token, { http: true }).json({ payload });
 
-    res.status(200).json({ payload });
+    res.status(200).json({ payload, data: { token } });
   } catch (err) {
     res.status(400).json({ err });
   }
