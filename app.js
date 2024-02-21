@@ -68,7 +68,7 @@ app.post("/google-auth", async (req, res) => {
     await User.findByIdAndUpdate(user._id, { token });
     res
       .status(200)
-      .cookie("token", token, { http: true })
+      // .cookie("token", token, { http: true })
       .json({
         status: "OK",
         code: 200,
