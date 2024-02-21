@@ -60,7 +60,11 @@ app.post("/google-auth", async (req, res) => {
         authSource: "google",
       });
     }
-    const token = jwt.sign({ email }, JWT_SECRET);
+
+    const payloads = {
+      id: user._id,
+    };
+    const token = jwt.sign(payloads, JWT_SECRET);
     await User.findByIdAndUpdate(user._id, { token });
     res
       .status(200)
