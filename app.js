@@ -63,16 +63,19 @@ app.post("/google-auth", async (req, res) => {
     console.log(user);
     const token = jwt.sign({ user }, JWT_SECRET);
     await User.findByIdAndUpdate(user._id, { token });
-    res.status(200).json({
-      status: "OK",
-      code: 200,
-      data: {
-        token,
-        user: {
-          email,
+    res
+      .status(200)
+      .cookie("token", token, { http: true })
+      .json({
+        status: "OK",
+        code: 200,
+        data: {
+          token,
+          user: {
+            email,
+          },
         },
-      },
-    });
+      });
 
     // res
     //   .status(200)
