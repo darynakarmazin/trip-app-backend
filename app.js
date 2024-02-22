@@ -48,8 +48,7 @@ app.post("/google-auth", async (req, res) => {
     });
     const payload = ticket.getPayload();
     const userid = payload["sub"];
-    const { email, given_name, family_name } = payload;
-    console.log(payload);
+    const { email, given_name, family_name, picture } = payload;
 
     let user = await User.findOne({ email });
     if (!user) {
@@ -71,6 +70,9 @@ app.post("/google-auth", async (req, res) => {
         token,
         user: {
           email,
+          given_name,
+          family_name,
+          picture,
         },
       },
     });
